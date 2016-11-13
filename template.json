@@ -1,0 +1,33 @@
+{
+	"variables": {
+		"instance_type": "c4.xlarge",
+		"source_ami": "ami-9f5efbff",
+		"region": "us-west-2"
+	},
+
+	"builders": [
+		{
+			"type": "amazon-ebs",
+			"region": "{{user `region`}}",
+			"source_ami": "{{user `source_ami`}}",
+			"instance_type": "{{user `instance_type`}}",
+			"ami_name": "windows-ami {{timestamp}}",
+			"user_data_file": "{{template_dir}}/userdata.ps1",
+			"communicator": "ssh",
+			"ssh_username": "Administrator",
+			"ssh_timeout": "30m",
+			"disable_stop_instance": "true"
+		}
+	],
+
+	"_comment": "The shell provisioner doesn't work well with Windows, so some hackery. TODO: use script name",
+	"provisioners": [
+		{
+			"type": "shell",
+			"execute_command": "powershell '& { C:\\provision.ps1 ; exit $LastExitCode }'",
+			"remote_path": "C:\\provision.ps1",
+			"script": "provision.ps1",
+			"skip_clean": "true"
+		}
+	]
+}
