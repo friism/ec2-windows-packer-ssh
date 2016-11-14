@@ -2,6 +2,9 @@
 $ProgressPreference = 'SilentlyContinue'
 $ErrorActionPreference = 'Stop'
 
+Write-Output "Disabling anti-virus monitoring"
+Set-MpPreference -DisableRealtimeMonitoring $true
+
 Write-Output "Downloading OpenSSH"
 Invoke-WebRequest "https://github.com/PowerShell/Win32-OpenSSH/releases/download/v0.0.3.0/OpenSSH-Win64.zip" -OutFile OpenSSH-Win64.zip -UseBasicParsing
 
@@ -9,8 +12,7 @@ Write-Output "Expanding OpenSSH"
 Expand-Archive OpenSSH-Win64.zip $Env:ProgramFiles
 Remove-Item -Force OpenSSH-Win64.zip
 
-Write-Output "Disabling password authentication"
-Add-Content $Env:ProgramFiles\OpenSSH-Win64\sshd_config "`nPasswordAuthentication no"
+Write-Output "TODO!! Disabling password authentication"
 
 Push-Location $Env:ProgramFiles\OpenSSH-Win64
 
