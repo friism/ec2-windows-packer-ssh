@@ -1,4 +1,4 @@
-# Packer temlate for building Windows with SSH public authentication
+# Packer temlate for building Windows with SSH public key authentication
 
 This Packer template builds AWS AMIs that support login with SSH public key auth. The public key is privisioned using the AWS EC2 key infrastructure.
 
