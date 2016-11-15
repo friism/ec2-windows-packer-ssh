@@ -1,3 +1,9 @@
+# Packer temlate for building Windows with SSH public authentication
+
+This Packer template builds AWS AMIs that support login with SSH public key auth. The public key is privisioned using the AWS EC2 key infrastructure.
+
+The template doesn't use WinRM at all, SSH is also used by the Packer builder.
+
 # How to use
 
 ## Build AMI
@@ -9,7 +15,7 @@ packer build template.json
 us-west-2: <ami-id>
 ```
 
-## Create and log into instance created from AMI
+## Create instance from AMI
 
 ### Using AWS CLI
 
@@ -24,17 +30,31 @@ aws ec2 get-password-data --instance-id $instanceid --priv-launch-key <key-file-
 
 ### Using Powershell
 
-**Not complete**
+```
+$instanceid = (New-EC2Instance -ImageId <ami-id> -InstanceType c4.xlarge -KeyName <key-name> -SecurityGroupId <security-group-id> -Region us-west-2).Instances[0].InstanceId
+Get-EC2PasswordData -InstanceId $instanceid -PemFile <key-file-path> -Region us-west-2
+<password>
+(Get-EC2Instance -InstanceId $instanceid -Region us-west-2).Instances[0].PublicIpAddress
+<ip-address>
+```
+
+## Log in
+
+Unfortunately [the first login has to use a password](https://github.com/PowerShell/Win32-OpenSSH/issues/381), to activate the Windows user account. Only then can SSH keys be used for login.
+
+The first login will initialize the `Administrator` account.
 
 ```
-Get-EC2PasswordData -InstanceId <instance-id> -PemFile <key-file-path> -Region us-west-2
+
+ssh Administrator@<ip-address> exit
 <password>
-(Get-EC2Instance -InstanceId <instance-id> -Region us-west-2).Instances[0].PublicIpAddress
-<ip-address>
+
+ssh -i <key-path> Administrator@<ip-address>
 ```
 
 # TODO
 
+ * Clean up the Packer builder to better support Windows
  * Debloat more
  * SSH only works after logging in with RDP
  	- hardcode password and login during sysprep finalize, then disable that password
@@ -42,13 +62,13 @@ Get-EC2PasswordData -InstanceId <instance-id> -PemFile <key-file-path> -Region u
  	-login with password auth first
  * Disable password auth after first login
  * Disable Admin password
- * Disable remote RDP
- * Load the keys into agent
+ * [Load the keys into agent](https://github.com/PowerShell/Win32-OpenSSH/wiki/Install-Win32-OpenSSH)
+ * Consider transitioning from sysprep to just feeding in userdata when provisioning instances (it'd be less generic though)
 
 # Notes
 
  * The provision script cannot contain comments because line-endings are not preserved
- * A password login is required before passwordless login works
+ * [A password login is required before public key login works](https://github.com/PowerShell/Win32-OpenSSH/issues/381)
 
 # Resources
 
