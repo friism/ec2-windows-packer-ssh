@@ -1,7 +1,5 @@
 # How to use
 
-ami-604fed00
-
 ## Build AMI
 
 ```
@@ -16,13 +14,11 @@ us-west-2: <ami-id>
 ### Using AWS CLI
 
 ```
-aws ec2 run-instances --image-id <ami-id> --count 1 --instance-type c4.xlarge --key-name <key-name> --security-group-ids <security-group-id> --query "Instances[*].InstanceId" --output=text
-<instance-id>
-aws ec2 wait password-data-available --instance-id <instance-id>
-...
-aws ec2 describe-instances --instance-ids <instance-id> --query "Reservations[*].Instances[*].PublicIpAddress" --output=text
+$instanceid = aws ec2 run-instances --image-id <ami-id> --count 1 --instance-type c4.xlarge --key-name <key-name> --security-group-ids <security-group-id> --query "Instances[*].InstanceId" --output=text
+aws ec2 wait password-data-available --instance-id $instanceid ; `
+aws ec2 describe-instances --instance-ids $instanceid --query "Reservations[*].Instances[*].PublicIpAddress" --output=text ; `
+aws ec2 get-password-data --instance-id $instanceid --priv-launch-key <key-file-path> --query "PasswordData" --output=text
 <ip-address>
-aws ec2 get-password-data --instance-id <instance-id> --priv-launch-key <key-file-path> --query "PasswordData" --output=text
 <password>
 ```
 

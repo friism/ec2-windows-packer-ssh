@@ -12,14 +12,11 @@
 			"source_ami": "{{user `source_ami`}}",
 			"instance_type": "{{user `instance_type`}}",
 			"ami_name": "windows-ami {{timestamp}}",
-			"user_data_file": "{{template_dir}}/userdata.ps1",
+			"user_data_file": "{{template_dir}}/builder-userdata.ps1",
 			"communicator": "ssh",
 			"ssh_username": "Administrator",
 			"ssh_timeout": "30m",
-			"disable_stop_instance": "true",
-
-			"ssh_keypair_name": "friism-test",
-			"ssh_private_key_file": "C:\\Users\\Michael Friis\\Downloads\\friism-test.pem"
+			"disable_stop_instance": "true"
 		}
 	],
 
