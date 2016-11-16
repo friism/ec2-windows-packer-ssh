@@ -32,12 +32,18 @@ Start-Process git.exe -ArgumentList '/VERYSILENT /SUPPRESSMSGBOXES /CLOSEAPPLICA
 Remove-Item -Force git.exe
 setx /M PATH "$Env:Path;c:\git\cmd"
 
+Add-Type -AssemblyName System.Web
+$lc = Get-Content C:\ProgramData\Amazon\EC2-Windows\Launch\Config\LaunchConfig.json -raw | ConvertFrom-Json
+$lc.AdminPasswordType = "Specify"
+$lc.AdminPassword = "test12#test12#"
+$lc | ConvertTo-Json | set-content C:\ProgramData\Amazon\EC2-Windows\Launch\Config\LaunchConfig.json
+
 Add-Content $Env:ProgramData\Amazon\EC2-Windows\Launch\Sysprep\BeforeSysprep.cmd 'del "C:\Program Files\OpenSSH-Win64\*_key*"'
 Add-Content $Env:ProgramData\Amazon\EC2-Windows\Launch\Sysprep\BeforeSysprep.cmd 'del C:\Users\Administrator\.ssh\authorized_keys'
 Add-Content $Env:ProgramData\Amazon\EC2-Windows\Launch\Sysprep\BeforeSysprep.cmd 'del C:\provision.ps1'
 
-Add-Content $Env:ProgramData\Amazon\EC2-Windows\Launch\Sysprep\SysprepSpecialize.cmd 'pushd C:\Program Files\OpenSSH-Win64 & .\ssh-keygen.exe -A & popd'
-Add-Content $Env:ProgramData\Amazon\EC2-Windows\Launch\Sysprep\SysprepSpecialize.cmd 'powershell -c "New-Item -ErrorAction Ignore -Type Directory C:\Users\Administrator\.ssh ; Invoke-WebRequest http://169.254.169.254/latest/meta-data/public-keys/0/openssh-key -UseBasicParsing -OutFile C:\Users\Administrator\.ssh\authorized_keys"'
+$scriptcommand = 'powershell -ExecutionPolicy Bypass -NoProfile -c "& C:\specialize-script.ps1 -password ''{0}''"' -f $lc.AdminPassword
+Add-Content $Env:ProgramData\Amazon\EC2-Windows\Launch\Sysprep\SysprepSpecialize.cmd $scriptcommand
 
 & $Env:ProgramData\Amazon\EC2-Windows\Launch\Scripts\InitializeInstance.ps1 -Schedule
 & $Env:ProgramData\Amazon\EC2-Windows\Launch\Scripts\SysprepInstance.ps1

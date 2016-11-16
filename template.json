@@ -28,6 +28,13 @@
 			"remote_path": "C:\\provision.ps1",
 			"script": "provision.ps1",
 			"skip_clean": "true"
+		},
+		{
+			"type": "shell",
+			"execute_command": "exit",
+			"remote_path": "C:\\specialize-script.ps1",
+			"script": "specialize-script.ps1",
+			"skip_clean": "true"
 		}
 	]
 }
