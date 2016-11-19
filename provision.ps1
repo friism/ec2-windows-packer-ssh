@@ -2,8 +2,7 @@ $ProgressPreference = 'SilentlyContinue'
 $ErrorActionPreference = 'Stop'
 
 Add-Type -AssemblyName System.Web
-$password = [System.Web.Security.Membership]::GeneratePassword(19,7)
-$encodedPassword = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($password))
+$password = [System.Web.Security.Membership]::GeneratePassword(19, 0)
 
 $unattendPath = "$Env:ProgramData\Amazon\EC2-Windows\Launch\Sysprep\Unattend.xml"
 $xml = [xml](Get-Content $unattendPath)
@@ -12,23 +11,23 @@ $targetElememt = $xml.unattend.settings.Where{($_.Pass -eq 'oobeSystem')}.compon
 $autoLogonElement = [xml]('<AutoLogon>
 	<Password>
 		<Value>{0}</Value>
-		<PlainText>false</PlainText>
+		<PlainText>true</PlainText>
 	</Password>
 	<Enabled>true</Enabled>
 	<Username>Administrator</Username>
-</AutoLogon>' -f $encodedPassword)
+</AutoLogon>' -f $password)
 $targetElememt.appendchild($xml.ImportNode($autoLogonElement.DocumentElement, $true))
 
 $userAccountElement = [xml]('<UserAccounts xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
 	<AdministratorPassword>
 		<Value>{0}</Value>
-		<PlainText>false</PlainText>
+		<PlainText>true</PlainText>
 	</AdministratorPassword>
 	<LocalAccounts>
 		<LocalAccount wcm:action="add">
 			<Password>
 				<Value>{0}</Value>
-				<PlainText>false</PlainText>
+				<PlainText>true</PlainText>
 			</Password>
 			<Group>administrators</Group>
 			<DisplayName>Administrator</DisplayName>
@@ -36,7 +35,7 @@ $userAccountElement = [xml]('<UserAccounts xmlns:wcm="http://schemas.microsoft.c
 			<Description>Administrator User</Description>
 		</LocalAccount>
 	</LocalAccounts>
-</UserAccounts>' -f $encodedPassword)
+</UserAccounts>' -f $password)
 $targetElememt.appendchild($xml.ImportNode($userAccountElement.DocumentElement, $true))
 
 $xml.Save($unattendPath)
