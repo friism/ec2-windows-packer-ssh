@@ -20,20 +20,25 @@
 		}
 	],
 
-	"_comment": "The shell provisioner doesn't work well with Windows, so some hackery. TODO: use script name",
+	"_comment": "The shell provisioner doesn't work well with Windows, so some hackery",
 	"provisioners": [
 		{
 			"type": "shell",
-			"execute_command": "powershell C:\\provision.ps1",
-			"remote_path": "C:\\provision.ps1",
-			"script": "provision.ps1",
+			"execute_command": "powershell {{ .Path }}",
+			"remote_path": "C:\\button-down.ps1",
+			"script": "button-down.ps1",
 			"skip_clean": "true"
 		},
 		{
+			"type": "file",
+			"source": "specialize-script.ps1",
+			"destination": "C:\\specialize-script.ps1"
+		},
+		{
 			"type": "shell",
-			"execute_command": "exit",
-			"remote_path": "C:\\specialize-script.ps1",
-			"script": "specialize-script.ps1",
+			"execute_command": "powershell {{ .Path }}",
+			"remote_path": "C:\\provision.ps1",
+			"script": "provision.ps1",
 			"skip_clean": "true"
 		}
 	]

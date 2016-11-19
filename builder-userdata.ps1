@@ -12,7 +12,8 @@ Write-Output "Expanding OpenSSH"
 Expand-Archive OpenSSH-Win64.zip $Env:ProgramFiles
 Remove-Item -Force OpenSSH-Win64.zip
 
-Write-Output "TODO!! Disabling password authentication"
+Write-Output "Disabling password authentication"
+Add-Content $Env:ProgramFiles\OpenSSH-Win64\sshd_config "`nPasswordAuthentication no"
 
 Push-Location $Env:ProgramFiles\OpenSSH-Win64
 

@@ -1,6 +1,6 @@
 # Packer temlate for building Windows with SSH public key authentication
 
-This Packer template builds AWS AMIs that support login with SSH public key auth. The public key is privisioned using the AWS EC2 key infrastructure.
+This Packer template builds AWS AMIs that support login with SSH public key auth. The public key is provisioned using the AWS EC2 key infrastructure.
 
 The template doesn't use WinRM at all, SSH is also used by the Packer builder.
 
@@ -40,15 +40,7 @@ Get-EC2PasswordData -InstanceId $instanceid -PemFile <key-file-path> -Region us-
 
 ## Log in
 
-Unfortunately [the first login has to use a password](https://github.com/PowerShell/Win32-OpenSSH/issues/381), to activate the Windows user account. Only then can SSH keys be used for login.
-
-The first login will initialize the `Administrator` account.
-
 ```
-
-ssh Administrator@<ip-address> exit
-<password>
-
 ssh -i <key-path> Administrator@<ip-address>
 ```
 
@@ -56,19 +48,6 @@ ssh -i <key-path> Administrator@<ip-address>
 
  * Clean up the Packer builder to better support Windows
  * Debloat more
- * SSH only works after logging in with RDP
- 	- hardcode password and login during sysprep finalize, then disable that password
-	- find another way to init the account
- 	-login with password auth first
- * Disable password auth after first login
- * Disable Admin password
- * [Load the keys into agent](https://github.com/PowerShell/Win32-OpenSSH/wiki/Install-Win32-OpenSSH)
- * Consider transitioning from sysprep to just feeding in userdata when provisioning instances (it'd be less generic though)
-
-# Notes
-
- * The provision script cannot contain comments because line-endings are not preserved
- * [A password login is required before public key login works](https://github.com/PowerShell/Win32-OpenSSH/issues/381)
 
 # Resources
 

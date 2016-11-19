@@ -1,9 +1,5 @@
-param([String]$password)
-
 $ProgressPreference = 'SilentlyContinue'
 $ErrorActionPreference = 'Stop'
-
-Start-Transcript -path C:\specialize-script-output.log -append
 
 Push-Location $Env:ProgramFiles\OpenSSH-Win64
 .\ssh-keygen -A
@@ -14,10 +10,7 @@ Push-Location $Env:ProgramFiles\OpenSSH-Win64
 del *_key
 Pop-Location
 
+$keyPath = "C:\Users\Administrator\.ssh\authorized_keys"
+$keyUrl = "http://169.254.169.254/latest/meta-data/public-keys/0/openssh-key"
 New-Item -ErrorAction Ignore -Type Directory C:\Users\Administrator\.ssh
-Invoke-WebRequest http://169.254.169.254/latest/meta-data/public-keys/0/openssh-key -UseBasicParsing -OutFile C:\Users\Administrator\.ssh\authorized_keys
-
-$command = "powershell.exe -c Start-Process -FilePath cmd.exe /c -Credential (New-Object -TypeName 'System.Management.Automation.PSCredential' -ArgumentList 'Administrator', (ConvertTo-SecureString -String '{0}' -AsPlainText -Force))" -f $password
-schtasks /create /ru SYSTEM /sc onstart /tn InitAdministrator /tr $command
-
-Stop-Transcript
+Do { Start-Sleep 1 ; Invoke-WebRequest $keyUrl -UseBasicParsing -OutFile $keyPath } While ( -Not (Test-Path $keyPath) )
