@@ -16,7 +16,10 @@
 			"communicator": "ssh",
 			"ssh_username": "Administrator",
 			"ssh_timeout": "30m",
-			"disable_stop_instance": "true"
+			"disable_stop_instance": "true",
+
+			"ssh_keypair_name": "friism-test",
+			"ssh_private_key_file": "C:\\Users\\Michael Friis\\Downloads\\friism-test.pem"
 		}
 	],
 
@@ -26,8 +29,7 @@
 			"type": "shell",
 			"execute_command": "powershell {{ .Path }}",
 			"remote_path": "C:\\button-down.ps1",
-			"script": "button-down.ps1",
-			"skip_clean": "true"
+			"script": "button-down.ps1"
 		},
 		{
 			"type": "file",
@@ -38,8 +40,7 @@
 			"type": "shell",
 			"execute_command": "powershell {{ .Path }}",
 			"remote_path": "C:\\provision.ps1",
-			"script": "provision.ps1",
-			"skip_clean": "true"
+			"script": "provision.ps1"
 		}
 	]
 }

@@ -38,6 +38,8 @@ New-NetFirewallRule -Protocol TCP -LocalPort 22 -Direction Inbound -Action Allow
 
 Write-Output "Setting sshd service startup type to 'Automatic'"
 Set-Service sshd -StartupType Automatic
+Write-Output "Setting sshd service restart behavior"
+sc.exe failure sshd reset= 86400 actions= restart/1000
 
 Write-Output "Restarting..."
 Restart-Computer

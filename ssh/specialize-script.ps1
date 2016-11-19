@@ -1,6 +1,8 @@
 $ProgressPreference = 'SilentlyContinue'
 $ErrorActionPreference = 'Stop'
 
+Start-Transcript -path ("C:\{0}.log" -f $MyInvocation.MyCommand.Name) -append
+
 Push-Location $Env:ProgramFiles\OpenSSH-Win64
 .\ssh-keygen -A
 .\ssh-add ssh_host_dsa_key
@@ -18,3 +20,12 @@ New-Item -ErrorAction Ignore -Type Directory C:\Users\Administrator\.ssh
 $ErrorActionPreference = 'SilentlyContinue'
 Do { Start-Sleep 1 ; Invoke-WebRequest $keyUrl -UseBasicParsing -OutFile $keyPath } While ( -Not (Test-Path $keyPath) )
 $ErrorActionPreference = 'Stop'
+
+Add-Type -AssemblyName System.Web
+$password = [System.Web.Security.Membership]::GeneratePassword(19,7)
+$administrator = get-wmiobject win32_useraccount | Where { $_.Name -eq 'Administrator'} | Select -First 1
+$administratorAD = [adsi] ("WinNT://{0}/{1}" -f $administrator.PSComputerName, $administrator.Name )
+$administratorAD.SetPassword($password)
+$administratorAD.SetInfo()
+
+Stop-Transcript
