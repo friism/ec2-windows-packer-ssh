@@ -21,6 +21,10 @@ $ErrorActionPreference = 'SilentlyContinue'
 Do { Start-Sleep 1 ; Invoke-WebRequest $keyUrl -UseBasicParsing -OutFile $keyPath } While ( -Not (Test-Path $keyPath) )
 $ErrorActionPreference = 'Stop'
 
+Set-Service sshd -StartupType Automatic
+sc.exe failure sshd reset= 86400 actions= restart/500
+Start-Service sshd
+
 Add-Type -AssemblyName System.Web
 $password = [System.Web.Security.Membership]::GeneratePassword(19,7)
 $administrator = get-wmiobject win32_useraccount | Where { $_.Name -eq 'Administrator'} | Select -First 1

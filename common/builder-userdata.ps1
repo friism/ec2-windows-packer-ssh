@@ -40,5 +40,6 @@ Write-Host "Setting sshd service startup type to 'Automatic'"
 Set-Service sshd -StartupType Automatic
 Write-Host "Setting sshd service restart behavior"
 sc.exe failure sshd reset= 86400 actions= restart/500
-Start-Service sshd
+
+Restart-Computer -Force
 </powershell>

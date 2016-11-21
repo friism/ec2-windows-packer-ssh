@@ -1,7 +1,7 @@
 {
 	"variables": {
 		"instance_type": "c4.xlarge",
-		"source_ami": "ami-65a60a05",
+		"source_ami": "ami-5e6bce3e",
 		"region": "us-west-2"
 	},
 
@@ -11,12 +11,12 @@
 			"region": "{{user `region`}}",
 			"source_ami": "{{user `source_ami`}}",
 			"instance_type": "{{user `instance_type`}}",
-			"ami_name": "windows-ssh-ami {{timestamp}}",
-			"user_data_file": "{{template_dir}}/../common/get-key-userdata.ps1",
+			"ami_name": "windows-docker-ci-ami {{timestamp}}",
+			"user_data_file": "{{template_dir}}/../common/builder-userdata.ps1",
 			"communicator": "ssh",
 			"ssh_username": "Administrator",
 			"ssh_timeout": "30m",
-			"ssh_handshake_attempts": "100"
+			"disable_stop_instance": "true"
 		}
 	],
 
@@ -25,14 +25,37 @@
 		{
 			"type": "shell",
 			"execute_command": "powershell {{ .Path }}",
-			"remote_path": "C:\\git.ps1",
-			"script":"git.ps1"
+			"remote_path": "C:\\button-down.ps1",
+			"script": "{{template_dir}}/../common/button-down.ps1"
 		},
 		{
 			"type": "shell",
 			"execute_command": "powershell {{ .Path }}",
 			"remote_path": "C:\\jdk.ps1",
-			"script":"jdk.ps1"
+			"script":"{{template_dir}}/jdk.ps1"
+		},
+		{
+			"type": "shell",
+			"execute_command": "powershell {{ .Path }}",
+			"remote_path": "C:\\git.ps1",
+			"script":"{{template_dir}}/git.ps1"
+		},
+		{
+			"type": "shell",
+			"execute_command": "powershell {{ .Path }}",
+			"remote_path": "C:\\seed.ps1",
+			"script":"{{template_dir}}/seed.ps1"
+		},
+		{
+			"type": "file",
+			"source": "{{template_dir}}/../common/specialize-script.ps1",
+			"destination": "C:\\specialize-script.ps1"
+		},
+		{
+			"type": "shell",
+			"execute_command": "powershell {{ .Path }}",
+			"remote_path": "C:\\provision.ps1",
+			"script": "{{template_dir}}/../common/provision.ps1"
 		}
 	]
 }
