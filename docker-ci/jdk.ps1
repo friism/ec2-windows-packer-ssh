@@ -9,5 +9,5 @@ Invoke-Webrequest "http://download.oracle.com/otn-pub/java/jdk/8u111-b14/jdk-8u1
 Start-Process -Wait jdkinstaller.exe -ArgumentList "/s /INSTALLDIRPUBJRE=C:\jdk"
 Remove-Item -Force jdkinstaller.exe
 
-$Env:PATH = 'C:\jdk\bin;' + $Env:Path
-[Environment]::SetEnvironmentVariable("Path", $Env:PATH, [EnvironmentVariableTarget]::Machine)
+# $Env:PATH = 'C:\jdk\bin;' + $Env:Path
+# [Environment]::SetEnvironmentVariable("Path", $Env:PATH, [EnvironmentVariableTarget]::Machine)
