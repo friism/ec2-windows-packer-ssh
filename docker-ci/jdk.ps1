@@ -1,6 +1,8 @@
 $ProgressPreference = 'SilentlyContinue'
 $ErrorActionPreference = 'Stop'
 
+Start-Transcript -path ("C:\{0}.log" -f $MyInvocation.MyCommand.Name) -append
+
 $session = New-Object Microsoft.PowerShell.Commands.WebRequestSession
 $cookie = New-Object System.Net.Cookie("oraclelicense", "accept-securebackup-cookie", "/", ".oracle.com")
 $session.Cookies.Add($cookie)
@@ -13,3 +15,5 @@ $newPath = 'C:\jdk\bin;' + [Environment]::GetEnvironmentVariable("PATH", [Enviro
 [Environment]::SetEnvironmentVariable("PATH", $newPath, [EnvironmentVariableTarget]::Machine)
 
 C:\jdk\bin\java.exe -version
+
+Stop-Transcript
