@@ -18,7 +18,11 @@ $keyUrl = "http://169.254.169.254/latest/meta-data/public-keys/0/openssh-key"
 New-Item -ErrorAction Ignore -Type Directory C:\Users\Administrator\.ssh
 
 $ErrorActionPreference = 'SilentlyContinue'
-Do { Start-Sleep 1 ; Invoke-WebRequest $keyUrl -UseBasicParsing -OutFile $keyPath } While ( -Not (Test-Path $keyPath) )
+Do {
+	Start-Sleep 1
+	Write-Output "Trying to fetch key from metadata service"
+	Invoke-WebRequest $keyUrl -UseBasicParsing -OutFile $keyPath
+} While ( -Not (Test-Path $keyPath) )
 $ErrorActionPreference = 'Stop'
 
 Stop-Transcript
