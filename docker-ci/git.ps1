@@ -8,3 +8,5 @@ Remove-Item -Force git.exe
 $newPath = 'C:\git\cmd;' + [Environment]::GetEnvironmentVariable("PATH", [EnvironmentVariableTarget]::Machine)
 [Environment]::SetEnvironmentVariable("PATH", $newPath, [EnvironmentVariableTarget]::Machine)
 
+C:\git\cmd\git.exe --version
+

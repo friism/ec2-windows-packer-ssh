@@ -11,3 +11,5 @@ Remove-Item -Force jdkinstaller.exe
 
 $newPath = 'C:\jdk\bin;' + [Environment]::GetEnvironmentVariable("PATH", [EnvironmentVariableTarget]::Machine)
 [Environment]::SetEnvironmentVariable("PATH", $newPath, [EnvironmentVariableTarget]::Machine)
+
+C:\jdk\bin\java.exe -version
