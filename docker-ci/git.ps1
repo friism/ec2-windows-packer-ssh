@@ -5,5 +5,6 @@ Invoke-Webrequest "https://github.com/git-for-windows/git/releases/download/v2.1
 Start-Process git.exe -ArgumentList '/VERYSILENT /SUPPRESSMSGBOXES /CLOSEAPPLICATIONS /DIR=C:\git' -Wait
 Remove-Item -Force git.exe
 
-# $Env:PATH = 'C:\git\cmd;' + $Env:PATH
-# [Environment]::SetEnvironmentVariable("PATH", $Env:PATH, [EnvironmentVariableTarget]::Machine)
+$newPath = 'C:\git\cmd;' + [Environment]::GetEnvironmentVariable("PATH", [EnvironmentVariableTarget]::Machine)
+[Environment]::SetEnvironmentVariable("PATH", $newPath, [EnvironmentVariableTarget]::Machine)
+
