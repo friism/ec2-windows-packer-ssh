@@ -10,7 +10,10 @@ Remove-Item -ErrorAction Ignore $keyPath
 Remove-Item -ErrorAction Ignore ~\.ssh\authorized_keys
 
 $ErrorActionPreference = 'SilentlyContinue'
-Do { Start-Sleep 1 ; Invoke-WebRequest $keyUrl -UseBasicParsing -OutFile $keyPath } While ( -Not (Test-Path $keyPath) )
+Do {
+	Start-Sleep 1
+	Invoke-WebRequest $keyUrl -UseBasicParsing -OutFile $keyPath
+} While ( -Not (Test-Path $keyPath) )
 $ErrorActionPreference = 'Stop'
 
 Copy-Item -ErrorAction Ignore $keyPath ~\.ssh\authorized_keys

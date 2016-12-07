@@ -11,6 +11,7 @@
 			"region": "{{user `region`}}",
 			"source_ami": "{{user `source_ami`}}",
 			"instance_type": "{{user `instance_type`}}",
+			"ebs_optimized": "true",
 			"ami_name": "windows-docker-ci-ami {{timestamp}}",
 			"user_data_file": "{{template_dir}}/../common/builder-userdata.ps1",
 			"communicator": "ssh",
@@ -30,11 +31,16 @@
 			"binary": "true"
 		},
 		{
+			"type": "windows-restart",
+			"restart_command": "shutdown -f -r -t 0 & net stop sshd & net stop ssh-agent"
+		},
+		{
 			"type": "shell",
 			"execute_command": "powershell {{ .Path }}",
 			"remote_path": "C:\\jdk.ps1",
 			"script":"{{template_dir}}/jdk.ps1",
-			"binary": "true"
+			"binary": "true",
+			"pause_before": "20s"
 		},
 		{
 			"type": "shell",

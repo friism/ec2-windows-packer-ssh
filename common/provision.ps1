@@ -4,7 +4,7 @@ $ErrorActionPreference = 'Stop'
 Start-Transcript -path ("C:\{0}.log" -f $MyInvocation.MyCommand.Name) -append
 
 Add-Type -AssemblyName System.Web
-$password = [System.Web.Security.Membership]::GeneratePassword(19, 0)
+$password = [System.Web.Security.Membership]::GeneratePassword(19, 10).replace("&", "a").replace("<", "b").replace(">", "c")
 
 $unattendPath = "$Env:ProgramData\Amazon\EC2-Windows\Launch\Sysprep\Unattend.xml"
 $xml = [xml](Get-Content $unattendPath)

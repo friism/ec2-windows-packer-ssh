@@ -30,8 +30,15 @@ Push-Location $Env:ProgramFiles\OpenSSH-Win64
 Pop-Location
 
 Write-Host "Adding public key from instance metadata to authorized_keys"
+$keyPath = "~\.ssh\authorized_keys"
+$keyUrl = "http://169.254.169.254/latest/meta-data/public-keys/0/openssh-key"
 New-Item -Type Directory ~\.ssh
-Invoke-WebRequest http://169.254.169.254/latest/meta-data/public-keys/0/openssh-key -UseBasicParsing -OutFile ~\.ssh\authorized_keys
+$ErrorActionPreference = 'SilentlyContinue'
+Do {
+	Start-Sleep 1
+	Invoke-WebRequest $keyUrl -UseBasicParsing -OutFile $keyPath
+} While ( -Not (Test-Path $keyPath) )
+$ErrorActionPreference = 'Stop'
 
 Write-Host "Opening firewall port 22"
 New-NetFirewallRule -Protocol TCP -LocalPort 22 -Direction Inbound -Action Allow -DisplayName SSH

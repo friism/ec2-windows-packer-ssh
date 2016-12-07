@@ -20,10 +20,12 @@ New-Item -ErrorAction Ignore -Type Directory C:\Users\Administrator\.ssh
 $ErrorActionPreference = 'SilentlyContinue'
 Do {
 	Start-Sleep 1
-	Write-Output "Trying to fetch key from metadata service"
+	Write-Output ("{0:u}: Trying to fetch key from metadata service" -f (Get-Date))
 	Invoke-WebRequest $keyUrl -UseBasicParsing -OutFile $keyPath
+	Write-Output $Error[0]
 } While ( -Not (Test-Path $keyPath) )
 $ErrorActionPreference = 'Stop'
+Write-Output ("{0:u}: Key successfully retrieved" -f (Get-Date))
 
 reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 1 /f
 
