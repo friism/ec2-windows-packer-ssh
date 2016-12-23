@@ -3,16 +3,17 @@ $ErrorActionPreference = 'Stop'
 
 Start-Transcript -path ("C:\{0}.log" -f $MyInvocation.MyCommand.Name) -append
 
-$session = New-Object Microsoft.PowerShell.Commands.WebRequestSession
-$cookie = New-Object System.Net.Cookie("oraclelicense", "accept-securebackup-cookie", "/", ".oracle.com")
-$session.Cookies.Add($cookie)
-Invoke-Webrequest "http://download.oracle.com/otn-pub/java/jdk/8u111-b14/jdk-8u111-windows-x64.exe" -OutFile jdkinstaller.exe -UseBasicParsing -WebSession $session
+$jdkVersion = "zulu8.19.0.1-jdk8.0.112-win_x64"
 
-Start-Process -Wait jdkinstaller.exe -ArgumentList "/s /INSTALLDIRPUBJRE=C:\jdk"
-Remove-Item -Force jdkinstaller.exe
+Invoke-Webrequest "http://cdn.azul.com/zulu/bin/$jdkVersion.zip" -OutFile jdk.zip -UseBasicParsing
 
-$newPath = 'C:\jdk\bin;' + [Environment]::GetEnvironmentVariable("PATH", [EnvironmentVariableTarget]::Machine)
-[Environment]::SetEnvironmentVariable("PATH", $newPath, [EnvironmentVariableTarget]::Machine)
+New-Item -Type Directory C:\jdk-temp
+Expand-Archive jdk.zip -DestinationPath C:\jdk-temp
+Remove-Item -Force jdk.zip
+
+New-Item -Type Directory C:\jdk
+mv C:\jdk-temp\$jdkVersion\* C:\jdk\.
+Remove-Item -Force -Recurse C:\jdk-temp
 
 C:\jdk\bin\java.exe -version
 
