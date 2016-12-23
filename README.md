@@ -54,7 +54,7 @@ The chief concern when using these templates and building on AMIs generated with
 # TODO
 
  * Clean up the Packer builder to better support Windows
- * Debloat more
+ * Don't restart at the end of builder-userdata.ps1 if possible
  * Figure out startup script that fetches public key from metadata API (perhaps using local group policy)
 
 # Resources
