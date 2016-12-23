@@ -3,7 +3,7 @@ $ErrorActionPreference = 'Stop'
 
 Start-Transcript -path ("C:\{0}.log" -f $MyInvocation.MyCommand.Name) -append
 
-Push-Location $Env:ProgramFiles\OpenSSH-Win64
+Push-Location C:\OpenSSH-Win64
 .\ssh-keygen -A
 .\ssh-add ssh_host_dsa_key
 .\ssh-add ssh_host_rsa_key

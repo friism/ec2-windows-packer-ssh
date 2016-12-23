@@ -6,16 +6,17 @@ Write-Host "Disabling anti-virus monitoring"
 Set-MpPreference -DisableRealtimeMonitoring $true
 
 Write-Host "Downloading OpenSSH"
-Invoke-WebRequest "https://github.com/PowerShell/Win32-OpenSSH/releases/download/v0.0.3.0/OpenSSH-Win64.zip" -OutFile OpenSSH-Win64.zip -UseBasicParsing
+Invoke-WebRequest "https://github.com/PowerShell/Win32-OpenSSH/releases/download/v0.0.5.0/OpenSSH-Win64.zip" -OutFile OpenSSH-Win64.zip -UseBasicParsing
 
 Write-Host "Expanding OpenSSH"
-Expand-Archive OpenSSH-Win64.zip $Env:ProgramFiles
+Expand-Archive OpenSSH-Win64.zip C:\
 Remove-Item -Force OpenSSH-Win64.zip
 
 Write-Host "Disabling password authentication"
-Add-Content $Env:ProgramFiles\OpenSSH-Win64\sshd_config "`nPasswordAuthentication no"
+Add-Content C:\OpenSSH-Win64\sshd_config "`nPasswordAuthentication no"
+Add-Content C:\OpenSSH-Win64\sshd_config "`nUseDNS no"
 
-Push-Location $Env:ProgramFiles\OpenSSH-Win64
+Push-Location C:\OpenSSH-Win64
 
 Write-Host "Installing OpenSSH"
 & .\install-sshd.ps1
@@ -24,7 +25,6 @@ Write-Host "Installing OpenSSH key auth"
 & .\install-sshlsa.ps1
 
 Write-Host "Generating host keys"
-Push-Location $Env:ProgramFiles\OpenSSH-Win64
 .\ssh-keygen.exe -A
 
 Pop-Location
