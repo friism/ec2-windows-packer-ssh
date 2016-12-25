@@ -15,6 +15,9 @@ New-Item -Type Directory C:\jdk
 mv C:\jdk-temp\$jdkVersion\* C:\jdk\.
 Remove-Item -Force -Recurse C:\jdk-temp
 
+$newPath = 'C:\jdk\bin;' + [Environment]::GetEnvironmentVariable("PATH", [EnvironmentVariableTarget]::Machine)
+[Environment]::SetEnvironmentVariable("PATH", $newPath, [EnvironmentVariableTarget]::Machine)
+
 C:\jdk\bin\java.exe -version
 
 Stop-Transcript

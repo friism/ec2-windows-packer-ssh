@@ -1,7 +1,7 @@
 {
 	"variables": {
 		"instance_type": "c4.xlarge",
-		"source_ami": "ami-5e6bce3e",
+		"source_ami": "ami-b4b719d4",
 		"region": "us-west-2"
 	},
 
@@ -31,10 +31,6 @@
 			"binary": "true"
 		},
 		{
-			"type": "windows-restart",
-			"restart_command": "shutdown -f -r -t 0 & net stop sshd & net stop ssh-agent"
-		},
-		{
 			"type": "shell",
 			"execute_command": "powershell {{ .Path }}",
 			"remote_path": "C:\\jdk.ps1",
@@ -52,8 +48,8 @@
 		{
 			"type": "shell",
 			"execute_command": "powershell {{ .Path }}",
-			"remote_path": "C:\\seed.ps1",
-			"script":"{{template_dir}}/seed.ps1",
+			"remote_path": "C:\\docker.ps1",
+			"script":"{{template_dir}}/docker.ps1",
 			"binary": "true"
 		},
 		{
@@ -69,7 +65,8 @@
 			"execute_command": "powershell {{ .Path }}",
 			"remote_path": "C:\\provision.ps1",
 			"script": "{{template_dir}}/../common/provision.ps1",
-			"binary": "true"
+			"binary": "true",
+			"skip_clean": "true"
 		}
 	]
 }

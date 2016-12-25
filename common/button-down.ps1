@@ -34,4 +34,6 @@ schtasks /Change /TN "\Microsoft\Windows\Application Experience\Microsoft Compat
 
 Uninstall-WindowsFeature Windows-Defender, Windows-Defender-Features, FS-SMB1, WoW64-Support, PowerShell-ISE, NET-WCF-Services45
 
+Restart-Computer -Force
+
 Stop-Transcript
