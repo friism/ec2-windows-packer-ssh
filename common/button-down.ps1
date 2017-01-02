@@ -32,8 +32,11 @@ reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server" /v
 schtasks /End /TN "\Microsoft\Windows\Application Experience\Microsoft Compatibility Appraiser"
 schtasks /Change /TN "\Microsoft\Windows\Application Experience\Microsoft Compatibility Appraiser" /DISABLE
 
+$ErrorActionPreference = 'SilentlyContinue'
 Uninstall-WindowsFeature Windows-Defender, Windows-Defender-Features, FS-SMB1, WoW64-Support, PowerShell-ISE, NET-WCF-Services45
+$ErrorActionPreference = 'Stop'
 
+Stop-Service sshd, ssh-agent
 Restart-Computer -Force
 
 Stop-Transcript

@@ -1,7 +1,7 @@
 {
 	"variables": {
 		"instance_type": "c4.xlarge",
-		"source_ami": "ami-b4b719d4",
+		"source_ami": "ami-64982d04",
 		"region": "us-west-2"
 	},
 
