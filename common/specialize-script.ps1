@@ -27,6 +27,4 @@ Do {
 $ErrorActionPreference = 'Stop'
 Write-Output ("{0:u}: Key successfully retrieved" -f (Get-Date))
 
-reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 1 /f
-
 Stop-Transcript

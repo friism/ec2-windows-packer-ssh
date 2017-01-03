@@ -56,6 +56,7 @@ The chief concern when using these templates and building on AMIs generated with
  * Clean up the Packer builder to better support Windows
  * Don't restart at the end of builder-userdata.ps1 if possible
  * Figure out startup script that fetches public key from metadata API (perhaps using local group policy)
+ * Disable WinRM and RDP after first boot (probably requires disabling the EC2 instance initialization since it relies on those services)
 
 # Resources
 

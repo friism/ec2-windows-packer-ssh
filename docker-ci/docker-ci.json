@@ -17,7 +17,13 @@
 			"communicator": "ssh",
 			"ssh_username": "Administrator",
 			"ssh_timeout": "30m",
-			"disable_stop_instance": "true"
+			"disable_stop_instance": "true",
+			"launch_block_device_mappings": [{
+				"device_name": "/dev/sda1",
+				"volume_size": 50,
+				"volume_type": "gp2",
+				"delete_on_termination": true
+			}]
 		}
 	],
 
