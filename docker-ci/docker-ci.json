@@ -1,14 +1,23 @@
 {
 	"variables": {
 		"instance_type": "c4.xlarge",
-		"source_ami": "ami-64982d04",
 		"region": "us-west-2"
 	},
 	"builders": [
 		{
 			"type": "amazon-ebs",
+			"source_ami_filter": {
+				"filters": {
+					"virtualization-type": "hvm",
+					"name": "*Windows_Server-2016-English-Full-Containers-*",
+					"root-device-type": "ebs"
+				},
+				"owners": [
+					"801119661308"
+				],
+				"most_recent": true
+			},
 			"region": "{{user `region`}}",
-			"source_ami": "{{user `source_ami`}}",
 			"instance_type": "{{user `instance_type`}}",
 			"ebs_optimized": "true",
 			"ami_name": "windows-docker-ci-ami {{timestamp}}",
