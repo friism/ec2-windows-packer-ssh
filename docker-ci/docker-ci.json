@@ -4,7 +4,6 @@
 		"source_ami": "ami-64982d04",
 		"region": "us-west-2"
 	},
-
 	"builders": [
 		{
 			"type": "amazon-ebs",
@@ -18,15 +17,16 @@
 			"ssh_username": "Administrator",
 			"ssh_timeout": "30m",
 			"disable_stop_instance": "true",
-			"launch_block_device_mappings": [{
-				"device_name": "/dev/sda1",
-				"volume_size": 50,
-				"volume_type": "gp2",
-				"delete_on_termination": true
-			}]
+			"launch_block_device_mappings": [
+				{
+					"device_name": "/dev/sda1",
+					"volume_size": 50,
+					"volume_type": "gp2",
+					"delete_on_termination": true
+				}
+			]
 		}
 	],
-
 	"_comment": "The shell provisioner doesn't work well with Windows, so some hackery",
 	"provisioners": [
 		{
@@ -40,7 +40,7 @@
 			"type": "shell",
 			"execute_command": "powershell {{ .Path }}",
 			"remote_path": "C:\\jdk.ps1",
-			"script":"{{template_dir}}/jdk.ps1",
+			"script": "{{template_dir}}/jdk.ps1",
 			"binary": "true",
 			"pause_before": "20s"
 		},
@@ -48,14 +48,14 @@
 			"type": "shell",
 			"execute_command": "powershell {{ .Path }}",
 			"remote_path": "C:\\git.ps1",
-			"script":"{{template_dir}}/git.ps1",
+			"script": "{{template_dir}}/git.ps1",
 			"binary": "true"
 		},
 		{
 			"type": "shell",
 			"execute_command": "powershell {{ .Path }}",
 			"remote_path": "C:\\docker.ps1",
-			"script":"{{template_dir}}/docker.ps1",
+			"script": "{{template_dir}}/docker.ps1",
 			"binary": "true"
 		},
 		{
