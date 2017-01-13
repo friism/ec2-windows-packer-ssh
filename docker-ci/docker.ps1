@@ -7,7 +7,7 @@ Stop-Service -Force docker
 dockerd --unregister-service
 
 Remove-Item -Force -Recurse $Env:ProgramFiles\docker
-Invoke-WebRequest https://test.docker.com/builds/Windows/x86_64/docker-1.13.0-rc5.zip -UseBasicParsing -OutFile docker.zip
+Invoke-WebRequest https://test.docker.com/builds/Windows/x86_64/docker-1.13.0-rc7.zip -UseBasicParsing -OutFile docker.zip
 Expand-Archive docker.zip -DestinationPath $Env:ProgramFiles
 Remove-Item -Force docker.zip
 
