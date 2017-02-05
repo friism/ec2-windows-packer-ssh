@@ -43,7 +43,8 @@
 			"execute_command": "powershell {{ .Path }}",
 			"remote_path": "C:\\button-down.ps1",
 			"script": "{{template_dir}}/../common/button-down.ps1",
-			"binary": "true"
+			"binary": "true",
+			"skip_clean": "true"
 		},
 		{
 			"type": "shell",
@@ -51,21 +52,24 @@
 			"remote_path": "C:\\jdk.ps1",
 			"script": "{{template_dir}}/jdk.ps1",
 			"binary": "true",
-			"pause_before": "20s"
+			"pause_before": "20s",
+			"skip_clean": "true"
 		},
 		{
 			"type": "shell",
 			"execute_command": "powershell {{ .Path }}",
 			"remote_path": "C:\\git.ps1",
 			"script": "{{template_dir}}/git.ps1",
-			"binary": "true"
+			"binary": "true",
+			"skip_clean": "true"
 		},
 		{
 			"type": "shell",
 			"execute_command": "powershell {{ .Path }}",
 			"remote_path": "C:\\docker.ps1",
 			"script": "{{template_dir}}/docker.ps1",
-			"binary": "true"
+			"binary": "true",
+			"skip_clean": "true"
 		},
 		{
 			"type": "shell",

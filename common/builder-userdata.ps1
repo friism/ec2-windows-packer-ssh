@@ -6,7 +6,7 @@ Write-Host "Disabling anti-virus monitoring"
 Set-MpPreference -DisableRealtimeMonitoring $true
 
 Write-Host "Downloading OpenSSH"
-Invoke-WebRequest "https://github.com/PowerShell/Win32-OpenSSH/releases/download/v0.0.6.0/OpenSSH-Win64.zip" -OutFile OpenSSH-Win64.zip -UseBasicParsing
+Invoke-WebRequest "https://github.com/PowerShell/Win32-OpenSSH/releases/download/v0.0.8.0/OpenSSH-Win64.zip" -OutFile OpenSSH-Win64.zip -UseBasicParsing
 
 Write-Host "Expanding OpenSSH"
 Expand-Archive OpenSSH-Win64.zip C:\
