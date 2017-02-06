@@ -1,8 +1,8 @@
 # Packer template for building Windows with SSH public key authentication
 
-This Packer template builds AWS AMIs that support login with SSH public key auth. The public key is provisioned using the AWS EC2 key infrastructure.
+This Packer template builds AWS AMIs that support login with SSH public key auth. When using instances created from this template you don't have to ever retrieve, worry about or use a Windows password. You can log in with SSH directly using your SSH key.
 
-The template doesn't use WinRM at all, SSH is also used by the Packer builder.
+The public key is provisioned using the AWS EC2 key infrastructure. The template doesn't use WinRM at all, SSH is also used by the Packer builder.
 
 # How to use
 
