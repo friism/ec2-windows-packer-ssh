@@ -15,7 +15,7 @@ Pop-Location
 $keyPath = "C:\Users\Administrator\.ssh\authorized_keys"
 $keyUrl = "http://169.254.169.254/latest/meta-data/public-keys/0/openssh-key"
 
-New-Item -ErrorAction Ignore -Type Directory C:\Users\Administrator\.ssh
+New-Item -ErrorAction Ignore -Type Directory C:\Users\Administrator\.ssh > $null
 
 $ErrorActionPreference = 'SilentlyContinue'
 Do {

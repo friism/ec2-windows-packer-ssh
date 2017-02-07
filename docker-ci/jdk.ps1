@@ -7,11 +7,11 @@ $jdkVersion = "zulu8.19.0.1-jdk8.0.112-win_x64"
 
 Invoke-Webrequest "http://cdn.azul.com/zulu/bin/$jdkVersion.zip" -OutFile jdk.zip -UseBasicParsing
 
-New-Item -Type Directory C:\jdk-temp
+New-Item -Type Directory C:\jdk-temp > $null
 Expand-Archive jdk.zip -DestinationPath C:\jdk-temp
 Remove-Item -Force jdk.zip
 
-New-Item -Type Directory C:\jdk
+New-Item -Type Directory C:\jdk > $null
 mv C:\jdk-temp\$jdkVersion\* C:\jdk\.
 Remove-Item -Force -Recurse C:\jdk-temp
 

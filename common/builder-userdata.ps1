@@ -35,7 +35,7 @@ $newPath = 'C:\OpenSSH-Win64;' + [Environment]::GetEnvironmentVariable("PATH", [
 Write-Host "Adding public key from instance metadata to authorized_keys"
 $keyPath = "~\.ssh\authorized_keys"
 $keyUrl = "http://169.254.169.254/latest/meta-data/public-keys/0/openssh-key"
-New-Item -Type Directory ~\.ssh
+New-Item -Type Directory ~\.ssh > $null
 $ErrorActionPreference = 'SilentlyContinue'
 Do {
 	Start-Sleep 1
