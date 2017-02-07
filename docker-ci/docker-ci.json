@@ -4,7 +4,8 @@
 		"region": "us-west-2",
 		"branch": "",
 		"docker_version": null,
-		"docker_compose_version": null
+		"docker_compose_version": null,
+		"git_version": null
 	},
 	"builders": [
 		{
@@ -60,7 +61,7 @@
 		},
 		{
 			"type": "shell",
-			"execute_command": "powershell {{ .Path }}",
+			"execute_command": "powershell {{ .Path }} -gitVersion {{user `git_version`}}",
 			"remote_path": "C:\\git.ps1",
 			"script": "{{template_dir}}/git.ps1",
 			"binary": "true",
