@@ -1,7 +1,8 @@
 {
 	"variables": {
 		"instance_type": "c4.xlarge",
-		"region": "us-west-2"
+		"region": "us-west-2",
+		"branch": ""
 	},
 	"builders": [
 		{
@@ -20,7 +21,7 @@
 			"region": "{{user `region`}}",
 			"instance_type": "{{user `instance_type`}}",
 			"ebs_optimized": "true",
-			"ami_name": "windows-docker-ci-ami {{timestamp}}",
+			"ami_name": "windows-docker-ci-{{branch}}{{timestamp}}",
 			"user_data_file": "{{template_dir}}/../common/builder-userdata.ps1",
 			"communicator": "ssh",
 			"ssh_username": "Administrator",
