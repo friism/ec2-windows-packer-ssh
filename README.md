@@ -35,7 +35,7 @@ ssh -i <key-path> Administrator@<ip-address>
 
 ## Notes on Building Windows AMIs with OpenSSH
 
-The chief concern when using these templates and building on AMIs generated with them, is making sure that the public key from the AWS metadata service is writte to the Administrator user's `~\.ssh\authorized_keys` directory on booth. There are two general ways to achieve this:
+The chief concern when using these templates and building on AMIs generated with them, is making sure that the public key from the AWS metadata service is writte to the Administrator user's `~\.ssh\authorized_keys` directory on boot. There are two general ways to achieve this:
 
  * Do `sysprep` and make sure the key is written when an instance is launched from the sysprepped AMI. The key will only be re-written if another sysprep is done.
  * Pass in `userdata` script that writes the key from metadata. This has to be passed on every boot.
