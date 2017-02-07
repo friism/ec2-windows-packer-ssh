@@ -29,6 +29,9 @@ Write-Host "Generating host keys"
 
 Pop-Location
 
+$newPath = 'C:\OpenSSH-Win64;' + [Environment]::GetEnvironmentVariable("PATH", [EnvironmentVariableTarget]::Machine)
+[Environment]::SetEnvironmentVariable("PATH", $newPath, [EnvironmentVariableTarget]::Machine)
+
 Write-Host "Adding public key from instance metadata to authorized_keys"
 $keyPath = "~\.ssh\authorized_keys"
 $keyUrl = "http://169.254.169.254/latest/meta-data/public-keys/0/openssh-key"
