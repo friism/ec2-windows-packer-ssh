@@ -2,7 +2,9 @@
 	"variables": {
 		"instance_type": "c4.xlarge",
 		"region": "us-west-2",
-		"branch": ""
+		"branch": "",
+		"docker_version": null,
+		"docker_compose_version": null
 	},
 	"builders": [
 		{
@@ -21,7 +23,7 @@
 			"region": "{{user `region`}}",
 			"instance_type": "{{user `instance_type`}}",
 			"ebs_optimized": "true",
-			"ami_name": "windows-docker-ci-{{branch}}{{timestamp}}",
+			"ami_name": "windows-docker-ci-{{user `branch` | clean_ami_name}}{{timestamp}}",
 			"user_data_file": "{{template_dir}}/../common/builder-userdata.ps1",
 			"communicator": "ssh",
 			"ssh_username": "Administrator",
@@ -66,7 +68,7 @@
 		},
 		{
 			"type": "shell",
-			"execute_command": "powershell {{ .Path }}",
+			"execute_command": "powershell -File {{ .Path }} -dockerVersion {{user `docker_version`}} -dockerComposeVersion {{user `docker_compose_version`}}",
 			"remote_path": "C:\\docker.ps1",
 			"script": "{{template_dir}}/docker.ps1",
 			"binary": "true",
