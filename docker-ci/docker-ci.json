@@ -1,6 +1,6 @@
 {
 	"variables": {
-		"instance_type": "c4.xlarge",
+		"instance_type": "t2.xlarge",
 		"region": "us-west-2",
 		"branch": "",
 		"docker_version": null,
@@ -23,7 +23,6 @@
 			},
 			"region": "{{user `region`}}",
 			"instance_type": "{{user `instance_type`}}",
-			"ebs_optimized": "true",
 			"ami_name": "windows-docker-ci-{{user `branch` | clean_ami_name}}{{timestamp}}",
 			"user_data_file": "{{template_dir}}/../common/builder-userdata.ps1",
 			"communicator": "ssh",
