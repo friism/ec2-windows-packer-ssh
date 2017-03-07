@@ -44,7 +44,7 @@
 		{
 			"type": "shell",
 			"execute_command": "powershell {{ .Path }}",
-			"remote_path": "C:\\button-down.ps1",
+			"remote_path": "button-down.ps1",
 			"script": "{{template_dir}}/../common/button-down.ps1",
 			"binary": "true",
 			"skip_clean": "true"
@@ -52,7 +52,7 @@
 		{
 			"type": "shell",
 			"execute_command": "powershell {{ .Path }}",
-			"remote_path": "C:\\jdk.ps1",
+			"remote_path": "jdk.ps1",
 			"script": "{{template_dir}}/jdk.ps1",
 			"binary": "true",
 			"pause_before": "20s",
@@ -61,7 +61,7 @@
 		{
 			"type": "shell",
 			"execute_command": "powershell {{ .Path }} -gitVersion {{user `git_version`}}",
-			"remote_path": "C:\\git.ps1",
+			"remote_path": "git.ps1",
 			"script": "{{template_dir}}/git.ps1",
 			"binary": "true",
 			"skip_clean": "true"
@@ -69,7 +69,7 @@
 		{
 			"type": "shell",
 			"execute_command": "powershell -File {{ .Path }} -dockerVersion {{user `docker_version`}} -dockerComposeVersion {{user `docker_compose_version`}}",
-			"remote_path": "C:\\docker.ps1",
+			"remote_path": "docker.ps1",
 			"script": "{{template_dir}}/docker.ps1",
 			"binary": "true",
 			"skip_clean": "true"
@@ -78,14 +78,14 @@
 			"type": "shell",
 			"execute_command": "exit",
 			"script": "{{template_dir}}/../common/specialize-script.ps1",
-			"remote_path": "C:\\specialize-script.ps1",
+			"remote_path": "specialize-script.ps1",
 			"binary": "true",
 			"skip_clean": "true"
 		},
 		{
 			"type": "shell",
 			"execute_command": "powershell {{ .Path }}",
-			"remote_path": "C:\\provision.ps1",
+			"remote_path": "provision.ps1",
 			"script": "{{template_dir}}/../common/provision.ps1",
 			"binary": "true",
 			"skip_clean": "true"
