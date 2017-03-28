@@ -9,7 +9,7 @@ The public key is provisioned using the AWS EC2 key infrastructure. The template
 ## Build AMI
 
 ```
-packer build -var "branch=$(git rev-parse --abbrev-ref HEAD)" -var 'docker_version=1.13.1' -var 'docker_compose_version=1.11.1' -var 'git_version=2.11.1.windows.1' .\docker-ci\docker-ci.json
+packer build -var "branch=$(git rev-parse --abbrev-ref HEAD)" -var 'docker_version=17.03.0' -var 'docker_compose_version=1.11.2' -var 'git_version=2.12.2.windows.1' .\docker-ci\docker-ci.json
 ...
 --> amazon-ebs: AMIs were created:
 us-west-2: <ami-id>

@@ -48,6 +48,7 @@ New-NetFirewallRule -Protocol TCP -LocalPort 22 -Direction Inbound -Action Allow
 
 Write-Host "Setting sshd service startup type to 'Automatic'"
 Set-Service sshd -StartupType Automatic
+Set-Service ssh-agent -StartupType Automatic
 Write-Host "Setting sshd service restart behavior"
 sc.exe failure sshd reset= 86400 actions= restart/500
 
